@@ -1,4 +1,4 @@
-package com.hyman.springboot.reactive;
+package com.hyman.springboot;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

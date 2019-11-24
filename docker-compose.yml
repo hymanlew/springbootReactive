@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  springboot-reactive:
+    image: 192.168.13.129:12345/springboot-reactive
+    build: .
+    ports:
+      - 8081:8081
+    environment:
+      - spring.profiles.active=docker
+#    extra_hosts:
+#      - "redis:127.0.0.1"
+    JAVA_OPTS:
+      "-javaagent:/pinpoint-agent/pinpoint-bootstrap-1.8.4.jar -Dpinpoint.agentId=springboot-redis-in-docker -Dpinpoint.applicationName=springboot-redis"
+    links:
+      - redis
+  redis:
+    image: 192.168.13.129:23456/redis:5.0-alpine
+    container_name: redis
+
+  pinpoint-agent:
+    container_name: "pinpoint-agent"
+    image: "192.168.13.129:12345/pinpoint-agent:1.8.4"
+    restart: unless-stopped
+    networks:
+      - pinpoint
+    volumes:
+      - data-volume:/pinpoint-agent
+    environment:
+      - COLLECTOR_IP=${COLLECTOR_IP}
+      - COLLECTOR_TCP_PORT=${COLLECTOR_TCP_PORT}
+      - COLLECTOR_STAT_PORT=${COLLECTOR_STAT_PORT}
+      - COLLECTOR_SPAN_PORT=${COLLECTOR_SPAN_PORT}
+      - PROFILER_SAMPLING_RATE=${PROFILER_SAMPLING_RATE}
+      - DEBUG_LEVEL=${AGENT_DEBUG_LEVEL}

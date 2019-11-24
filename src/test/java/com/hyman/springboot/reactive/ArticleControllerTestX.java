@@ -2,7 +2,8 @@ package com.hyman.springboot.reactive;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hyman.springboot.Entity.Article;
+import com.hyman.springboot.entity.Article;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,6 @@ public class ArticleControllerTestX {
     public void testArticleList2() throws IOException {
         String body = this.restTemplate.getForObject("/article/list", String.class);
         List<Article> articleList = new ObjectMapper().readValue(body,new TypeReference<List<Article>>() {});
-        assertThat(articleList.get(0).getId()).isEqualTo(0L);
+        Assert.assertEquals(java.util.Optional.of(articleList.get(0).getId()), 0L);
     }
 }

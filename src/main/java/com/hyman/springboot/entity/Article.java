@@ -1,4 +1,4 @@
-package com.hyman.springboot.Entity;
+package com.hyman.springboot.entity;
 
 import lombok.Data;
 
