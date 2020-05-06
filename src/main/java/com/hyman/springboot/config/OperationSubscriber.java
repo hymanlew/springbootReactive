@@ -4,6 +4,7 @@ import org.reactivestreams.Subscription;
 
 public class OperationSubscriber<T> implements org.reactivestreams.Subscriber<T> {
 
+    @Override
     public void onSubscribe(Subscription s) {
         System.out.println("s = " + s);
         s.request(1);
